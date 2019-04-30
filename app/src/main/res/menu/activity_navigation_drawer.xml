@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_nav_calendar"
+            android:title="Islamic Calendar" />
+        <item
+            android:id="@+id/nav_quran"
+            android:icon="@drawable/ic_nav_quran"
+            android:title="Al-Quran" />
+        <item
+            android:id="@+id/nav_azan"
+            android:icon="@drawable/ic_nav_azan"
+            android:title="Azan reminder" />
+        <item
+            android:id="@+id/nav_donation"
+            android:icon="@drawable/ic_nav_donation"
+            android:title="Donation" />
+        <item
+            android:id="@+id/nav_qibla"
+            android:icon="@drawable/ic_nav_qibla"
+            android:title="Qibla" />
+        <item
+            android:id="@+id/nav_360"
+            android:icon="@drawable/ic_nav_360"
+            android:title="360 Views Videos" />
+        <item
+            android:id="@+id/nav_ramzam"
+            android:icon="@drawable/ic_nav_ramzan"
+            android:title="Ramzan Time table" />
+        <item
+            android:id="@+id/nav_daily_hadees"
+            android:icon="@drawable/ic_nav_daily_hades"
+            android:title="Daily Hades" />
+        <item
+            android:id="@+id/nav_name_allah"
+            android:icon="@drawable/ic_nav_allah"
+            android:title="Names of Allah" />
+        <item
+            android:id="@+id/nav_name_muhammad_saw"
+            android:icon="@drawable/ic_nav_muhammad_saw"
+            android:title="Nams of Muhammad (SAW)" />
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/ic_nav_contact"
+            android:title="Contact Us" />
+        <item
+            android:id="@+id/nav_direction"
+            android:icon="@drawable/ic_nav_direction"
+            android:title="Direction to Mosque" />
+        <item
+            android:id="@+id/nav_daily"
+            android:icon="@drawable/ic_nav_daily"
+            android:title="Daily Updates" />
+        <item
+            android:id="@+id/nav_event"
+            android:icon="@drawable/ic_nav_updates"
+            android:title="Event Updates" />
+        <item
+            android:id="@+id/nav_common"
+            android:icon="@drawable/ic_nav_dua"
+            android:title="Common Duas" />
+        <item
+            android:id="@+id/nav_rakat"
+            android:icon="@drawable/ic_nav_rakat"
+            android:title="Namaz Rakats?" />
+        <item
+            android:id="@+id/nav_eid"
+            android:icon="@drawable/ic_nav_eid"
+            android:title="How to Say Eid Salah?" />
+        <item
+            android:id="@+id/nav_calculator"
+            android:icon="@drawable/ic_nav_calculator"
+            android:title="Zakat Calculator" />
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_nav_settings"
+                android:title="Settings" />
+            <item
+                android:id="@+id/nav_info"
+                android:icon="@drawable/ic_nav_info"
+                android:title="Info" />
+        </menu>
+    </item>
+
+</menu>

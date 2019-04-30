@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home_menu"
+        android:title="@string/title_home" />
+
+    <item
+        android:id="@+id/navigation_azan"
+        android:icon="@drawable/ic_azan_menu"
+        android:title="Azan Reminder" />
+
+    <item
+        android:id="@+id/navigation_qible"
+        android:icon="@drawable/ic_qibla_menu"
+        android:title="Qibla" />
+
+    <item
+        android:id="@+id/navigation_donation"
+        android:icon="@drawable/ic_donation_menu"
+        android:title="Donation" />
+
+</menu>

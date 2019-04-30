@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.HomeActivity"
+    android:background="@color/colorListBackground">
+    <TextView
+        android:id="@+id/tvNameHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/ark"
+        android:layout_below="@id/ivHome"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_margin="15dp"
+        android:layout_centerHorizontal="true"
+        android:text = "99 Names of Allah"
+        android:textColor="@color/colorPrimary" />
+
+    <GridView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvNameHeader"
+        android:id="@+id/gridName"
+        android:numColumns="5"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:gravity="right"
+        android:layoutDirection="rtl"
+        android:horizontalSpacing="0dp">
+    </GridView>
+</RelativeLayout>

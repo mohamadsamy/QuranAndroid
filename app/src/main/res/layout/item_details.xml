@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorListBackground"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvVerse"
+        style="@android:style/Widget.Holo.TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pdmssaleemquranfont"
+        android:text="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ ۝"
+        android:textColor="@android:color/black"
+        android:textSize="23dp"
+        android:paddingRight="20dp"
+        android:typeface="normal" />
+    <!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"/>-->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTranslation"
+        android:textSize="10dp"
+        android:paddingRight="18dp"
+        android:fontFamily="@font/jnn"
+        android:textColor="@android:color/black"
+        android:text="شروع الله کا نام لے کر جو بڑا مہربان نہایت رحم والا ہے"/>
+    <!--<RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/black"/>-->
+</LinearLayout>

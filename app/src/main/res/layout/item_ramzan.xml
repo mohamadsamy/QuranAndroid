@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="40"
+    android:background="@color/colorListBackground"
+    android:padding="10dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRamzanDate"
+        android:text="25"
+        android:fontFamily="@font/ark"
+        android:textSize="13dp"
+        android:gravity="center"
+        android:layout_weight="10"
+        android:textColor="@color/colorPrimary"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRamzanHDate"
+        android:text="1"
+        android:fontFamily="@font/ark"
+        android:gravity="center"
+        android:textSize="13dp"
+        android:layout_weight="10"
+        android:textColor="@color/colorPrimary"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRamzanSehri"
+        android:gravity="center"
+        android:text="04:10 am"
+        android:fontFamily="@font/ark"
+        android:layout_weight="10"
+        android:textSize="13dp"
+        android:textColor="@color/colorPrimary"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvRamzanAftari"
+        android:text="07:20 pm"
+        android:gravity="center"
+        android:fontFamily="@font/ark"
+        android:textSize="13dp"
+        android:layout_weight="10"
+        android:textColor="@color/colorPrimary"/>
+
+</LinearLayout>
