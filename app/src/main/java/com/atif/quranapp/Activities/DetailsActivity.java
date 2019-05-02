@@ -2,6 +2,8 @@ package com.atif.quranapp.Activities;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.media.AudioManager;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,9 +35,12 @@ import com.android.volley.toolbox.Volley;
 import com.atif.quranapp.Adapter.DetailsAdapter;
 import com.atif.quranapp.Adapter.SurahAdapter;
 import com.atif.quranapp.Helper.FileOpener;
+import com.atif.quranapp.Helper.mp3Play;
 import com.atif.quranapp.Model.Details;
 import com.atif.quranapp.Model.Surah;
 import com.atif.quranapp.R;
+import com.atif.quranapp.Reciever.DownloadReceiver;
+import com.atif.quranapp.Services.DownloadService;
 import com.krishna.fileloader.FileLoader;
 import com.krishna.fileloader.builder.MultiFileDownloader;
 import com.krishna.fileloader.listener.MultiFileDownloadListener;
@@ -45,6 +51,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,26 +61,29 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class DetailsActivity extends AppCompatActivity implements MediaPlayer.OnBufferingUpdateListener,MediaPlayer.OnCompletionListener {
-    List<Details> list = new ArrayList<>();
-    List<Integer> durationList = new ArrayList<>();
-    List<String> playlist = new ArrayList<>();
+    public List<Details> list = new ArrayList<>();
+    public List<Integer> durationList = new ArrayList<>();
+    public List<String> playlist = new ArrayList<>();
+    public ArrayList<String> nameList = new ArrayList<>();
     Details model;
     int surah_number;
     int i=0;
+    public int downloadingIndex = 0;
 
+    public static String PUBLIC_SHARED_PREF = "quran_pref";
 
     public static String link = "http://192.168.8.102/";
     public static String mainLink = "https://download.quranicaudio.com/verses/Alafasy/mp3/";
 
     //UI Elements
     ListView listView;
-    private ImageView btn_play_pause;
-    private SeekBar seekBar;
-    private TextView tvDuration,tvTotal;
+    public ImageView btn_play_pause;
+    public SeekBar seekBar;
+    public TextView tvDuration,tvTotal;
 
-    private MediaPlayer mediaPlayer;
-    private int mediaFileLength;
-    private int realtimeLength;
+    public MediaPlayer mediaPlayer;
+    public int mediaFileLength;
+    public int realtimeLength;
     final Handler handler = new Handler();
     private Timer timer;
 
@@ -133,11 +144,11 @@ public class DetailsActivity extends AppCompatActivity implements MediaPlayer.On
                                 int duration = jsonObject.getInt("duration");
                                 durationList.add(duration);
                             }
-                            mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(playlist.get(0)));
-                            mediaPlayer.start();
+                            /*mediaPlayer = MediaPlayer.create(getApplicationContext(), Uri.parse(playlist.get(0)));
+                            //mediaPlayer.start();
                             mediaPlayer = MediaPlayer.create(getApplicationContext(),Uri.parse(playlist.get(++i)));
                             timer = new Timer();
-                            if (playlist.size()>1) playNext();
+                            if (playlist.size()>1) playNext();*/
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -181,6 +192,7 @@ public class DetailsActivity extends AppCompatActivity implements MediaPlayer.On
                     translation = "شروع الله کا نام لے کر جو بڑا مہربان نہایت رحم والا ہے";
                     ayaDone = true;
                 } else {
+                    nameList.add(String.format("%03d",surah_number)+String.format("%03d",aya)+".mp3");
                     playlist.add(mainLink+String.format("%03d",surah_number)+String.format("%03d",aya)+".mp3");
                     translation = tObject.getString("text");
                     index++;
@@ -211,6 +223,8 @@ public class DetailsActivity extends AppCompatActivity implements MediaPlayer.On
     }
 
     public void playNext() {
+        mediaPlayer.reset();
+        new mp3Play(DetailsActivity.this).execute(getFilesDir() + "/" + nameList.get(++i));
         /*timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -228,8 +242,8 @@ public class DetailsActivity extends AppCompatActivity implements MediaPlayer.On
         },durationList.get(i-1));*/
     }
 
-    private void recurive(final int index){
-        updateView(index);
+    public void recurive(final int index){
+        /*updateView(index);
         new CountDownTimer(durationList.get(index)*100, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -242,9 +256,9 @@ public class DetailsActivity extends AppCompatActivity implements MediaPlayer.On
                     recurive(index+1);
                 }
             }
-        }.start();
+        }.start();*/
     }
-    private void updateView(int index){
+    public void updateView(int index){
 
         if (listView.getLastVisiblePosition()-2 >= index){
             listView.smoothScrollToPosition(index+3);
@@ -284,82 +298,50 @@ public class DetailsActivity extends AppCompatActivity implements MediaPlayer.On
     }
 
     public void play(View view) {
-
-        List<MultiFileLoadRequest> multiFileLoadRequests = new ArrayList<>();
-        for (String playlistitem:playlist){
-            multiFileLoadRequests.add(new MultiFileLoadRequest(playlistitem, Environment.DIRECTORY_DOWNLOADS, FileLoader.DIR_EXTERNAL_PRIVATE, false));
+        SharedPreferences sharedPreferences = getSharedPreferences(PUBLIC_SHARED_PREF, Context.MODE_PRIVATE);
+        int j = 0 ;
+        for (String name:nameList){
+            if(!sharedPreferences.getBoolean(name,false)){
+                Toast.makeText(getApplicationContext(), "Not Downloaded "+name, Toast.LENGTH_SHORT).show();
+                downloadingIndex = j;
+                downloadMedia();
+                break;
+            }
+            j++;
         }
-        MultiFileDownloader multiFileDownloader = FileLoader.multiFileDownload(this);
-        multiFileDownloader.progressListener(new MultiFileDownloadListener() {
-            @Override
-            public void onProgress(File downloadedFile, int progress, int totalFiles) {
-                Log.e("progress", String.valueOf(progress));
-            }
-
-            @Override
-            public void onError(Exception e, int progress) {
-                super.onError(e, progress);
-                Log.e("Error", String.valueOf(progress));
-            }
-        }).loadMultiple(true);
 
 
-        /*AsyncTask<String,String,String> mp3Play = new AsyncTask<String, String, String>() {
-
-            @Override
-            protected void onPreExecute() {
-
-            }
-
-            @Override
-            protected String doInBackground(String... params) {
-                try{
-                    mediaPlayer.setDataSource(params[0]);
-                    mediaPlayer.prepare();
-                }
-                catch (Exception ex)
-                {
-
-                }
-                return "";
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                mediaFileLength = mediaPlayer.getDuration();
-                realtimeLength = mediaFileLength;
-                tvTotal.setText(String.format("%d:%d",TimeUnit.MILLISECONDS.toMinutes(realtimeLength),
-                        TimeUnit.MILLISECONDS.toSeconds(realtimeLength) -
-                                TimeUnit.MILLISECONDS.toSeconds(TimeUnit.MILLISECONDS.toMinutes(realtimeLength))));
-                if(!mediaPlayer.isPlaying())
-                {
-                    mediaPlayer.start();
-                    recurive(0);
-                    btn_play_pause.setImageResource(R.drawable.ic_pause_button);
-                }
-                else
-                {
-                    mediaPlayer.pause();
-                    btn_play_pause.setImageResource(R.drawable.ic_play_button);
-                }
-
-                updateSeekBar();
-
-            }
-        };
-
-        mp3Play.execute(mainLink+String.format("%03d",surah_number)+".mp3");*/
+        new mp3Play(DetailsActivity.this).execute(getFilesDir() + "/" + nameList.get(0));
 
     }
 
-    private void updateSeekBar() {
+    public void downloadMedia(){
+        Intent intent = new Intent(this, DownloadService.class);
+        intent.putExtra("url", playlist.get(downloadingIndex));
+        intent.putExtra("name", nameList.get(downloadingIndex));
+        Log.e("Downloading....",nameList.get(downloadingIndex));
+        intent.putExtra("receiver", new DownloadReceiver(new Handler(),DetailsActivity.this));
+        startService(intent);
+        downloadingIndex = downloadingIndex+1;
+    }
+
+    public void updateSeekBar() {
         seekBar.setProgress((int)(((float)mediaPlayer.getCurrentPosition() / mediaFileLength)*100));
+        if ((int)(((float)mediaPlayer.getCurrentPosition() / mediaFileLength)*100)>99) {
+            if (i<nameList.size()) {
+                playNext();
+            }
+        }
         if(mediaPlayer.isPlaying())
         {
             Runnable updater = new Runnable() {
                 @Override
                 public void run() {
-                    updateSeekBar();
+                    try {
+                        updateSeekBar();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     realtimeLength-=1000;
                     tvDuration.setText(String.format("%d:%d",TimeUnit.MILLISECONDS.toMinutes(realtimeLength),
                             TimeUnit.MILLISECONDS.toSeconds(realtimeLength) -
