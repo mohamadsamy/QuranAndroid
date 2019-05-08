@@ -1,6 +1,10 @@
 package com.atif.quranapp.Activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +17,7 @@ import com.atif.quranapp.Adapter.SurahAdapter;
 import com.atif.quranapp.Helper.FileOpener;
 import com.atif.quranapp.Model.Surah;
 import com.atif.quranapp.R;
+import com.atif.quranapp.Reciever.AlamBroadCast;
 
 import org.json.JSONArray;
 import org.json.JSONException;

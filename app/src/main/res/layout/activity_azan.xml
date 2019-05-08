@@ -49,6 +49,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvFajar"
                             android:textColor="@color/colorPrimary"
                             android:layout_gravity="center"
                             android:fontFamily="@font/ark"
@@ -89,6 +90,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvSunrise"
                             android:textColor="@color/colorPrimary"
                             android:layout_gravity="center"
                             android:fontFamily="@font/ark"
@@ -149,6 +151,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvDuhar"
                             android:textColor="@color/colorPrimary"
                             android:layout_gravity="center"
                             android:fontFamily="@font/ark"
@@ -195,6 +198,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvAsar"
                             android:textColor="@color/colorPrimary"
                             android:layout_gravity="center"
                             android:fontFamily="@font/ark"
@@ -255,6 +259,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvMaghrib"
                             android:textColor="@color/colorPrimary"
                             android:layout_gravity="center"
                             android:fontFamily="@font/ark"
@@ -301,6 +306,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:id="@+id/tvIsha"
                             android:textColor="@color/colorPrimary"
                             android:layout_gravity="center"
                             android:fontFamily="@font/ark"

@@ -25,6 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/tvNextPrayer"
                 android:text="Maghrib"
                 android:fontFamily="@font/ark"
                 android:textSize="30dp"
@@ -40,7 +41,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="01:06:12"
+            android:text="01:06"
+            android:id="@+id/tvPrayerTime"
             android:fontFamily="@font/ark"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"

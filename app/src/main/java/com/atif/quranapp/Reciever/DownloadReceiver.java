@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 import android.util.Log;
+import android.view.View;
 
 import com.atif.quranapp.Activities.DetailsActivity;
 import com.atif.quranapp.Services.DownloadService;
@@ -43,6 +44,12 @@ public class DownloadReceiver extends ResultReceiver {
                 }
                 if (detailsActivity.downloadingIndex < detailsActivity.playlist.size()){
                     detailsActivity.downloadMedia();
+                    Log.e("Downloading", String.valueOf(detailsActivity.downloadingIndex));
+                } else {
+                    detailsActivity.btn_play_pause.setVisibility(View.VISIBLE);
+                    detailsActivity.rlDownload.setVisibility(View.GONE);
+                    detailsActivity.progressBar.setVisibility(View.VISIBLE);
+                    detailsActivity.pbDownload.setVisibility(View.GONE);
                 }
 
                 //dialog.dismiss();
